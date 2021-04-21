@@ -1,0 +1,9 @@
+from building import *
+
+cwd     = GetCurrentDir()
+src     = Glob('*.c') + Glob('*.cpp')
+CPPPATH = [cwd + '/../inc']
+
+group = DefineGroup('Solar_terms', src, depend = ['PKG_USING_SOLAR_TERMS'], CPPPATH = CPPPATH)
+
+Return('group')
