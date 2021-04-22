@@ -8,7 +8,6 @@
 
 | 名称 | 说明 |
 | ---- | ---- |
-| docs  | 文档目录 |
 | examples | 例子目录 |
 | inc  | 头文件目录 |
 | src  | 源代码目录 |
@@ -29,6 +28,8 @@
 RT-Thread online packages
     tools packages --->
         [*] solar_terms: A tool package for judging the relationship between 24 solar terms according to the date.
+         [ ]   Enable show solar terms samples
+               Version (latest)  --->
 ```
 
 然后让 RT-Thread 的包管理器自动更新，或者使用 `pkgs --update` 命令更新包到 BSP 中。
@@ -51,7 +52,7 @@ signed char sun2solar_terms(int year, int month, int day, char *solar_terms_str)
 比如：
 
 ```c
-static showsolar_terms(int argc, char const *argv[]) {
+static int showsolar_terms(int argc, char const *argv[]) {
     if (argc == 4) {
         char str[16] = {'\0'};
         sun2solar_terms(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), str);
@@ -59,11 +60,10 @@ static showsolar_terms(int argc, char const *argv[]) {
     }
     return 0;
 }
+#ifdef FINSH_USING_MSH
+MSH_CMD_EXPORT(showsolar_terms, showsolar_terms generator: showsolar_terms[year][month][day]);
+#endif /* FINSH_USING_MSH */
 ```
-
-在打开 solar_terms package 后，当进行 bsp 编译时，它会被加入到 bsp 工程中进行编译。
-
-示例演示
 
 在 MSH 中输入命令 `showsolar_terms 2021 4 21`，可以在串口助手上看到输出了距离最近的下一个节气信息。
 
@@ -72,10 +72,12 @@ msh />showsolar_terms 2021 4 21
 距离 立夏 还有 14 天
 ```
 
+在打开 solar_terms package 示例后，当进行 bsp 编译时，它会被加入到 bsp 工程中进行编译。
 
 ## 4、注意事项
 
 - 当前可以生成距离最近的下一个节气信息对应的阳历范围为 1900-1-1 到2099-12-31。
+- 文件统一使用UTF-8编码。
 
 ## 5、联系方式 & 感谢
 
