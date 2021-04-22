@@ -1,6 +1,13 @@
 #include <rtthread.h>
 #include <solar_terms.h>
 
+#ifdef RT_USING_FINSH
+#include <finsh.h>
+#else
+#include <stdlib.h>
+#include <stdio.h>
+#endif
+
 static const char *usage = "        \n\
 Welcome in showsolar_terms.         \n\
 Usage:                              \n\
@@ -9,7 +16,7 @@ e.g:                                \n\
     showsolar_terms 2021 4 21       \n\
 \n";
 
-static showsolar_terms(int argc, char const *argv[])
+static int showsolar_terms(int argc, char const *argv[])
 {
     if (argc == 4)
     {
@@ -37,7 +44,5 @@ static showsolar_terms(int argc, char const *argv[])
 }
 
 #ifdef FINSH_USING_MSH
-#include <finsh.h>
-MSH_CMD_EXPORT(showsolar_terms, showsolar_terms generator
-               : showsolar_terms[year][month][day]);
+MSH_CMD_EXPORT(showsolar_terms, showsolar_terms generator: showsolar_terms[year][month][day]);
 #endif /* FINSH_USING_MSH */

@@ -22,7 +22,7 @@
  * SOFTWARE. 
  */
 
-#include <rtthread.h>
+#include <string.h>
 #include "solar_terms.h"
 
 /* 节气偏移表 solar_terms_day_offset_table[0] 数据对应的起始年份 */
